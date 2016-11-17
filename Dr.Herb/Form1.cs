@@ -81,15 +81,21 @@ namespace Dr.Herb
             // Display grid lines.
             lvHerb.GridLines = true;
 
-           
+
             // Sort the items in the list in ascending order.
             //lvHerb.Sorting = SortOrder.Ascending;
 
 
             // Add columns
+            /*
             lvHerb.Columns.Add("草藥", -2, HorizontalAlignment.Left);
             lvHerb.Columns.Add("重量", -2, HorizontalAlignment.Left);
             lvHerb.Columns.Add("單位", -2, HorizontalAlignment.Left);
+            */
+
+            lvHerb.Columns.Add("草藥");
+            lvHerb.Columns.Add("重量");
+            lvHerb.Columns.Add("單位");
 
             /*
             // Create three items and three sets of subitems for each item.
@@ -109,7 +115,7 @@ namespace Dr.Herb
             */
 
             //lvRegAnimals.Items.Add(item2);
-          
+
         }
 
 
