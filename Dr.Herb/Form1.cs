@@ -43,7 +43,9 @@ namespace Dr.Herb
             ddlweight.SelectedIndex = 0;
 
             initListViewHerb();
-            GVHerb.Font = new Font("微軟正黑體", 14);
+
+            //this.AcceptButton = this.btnComfirm;
+
         }
 
         private void button1_Click(object sender, EventArgs e)

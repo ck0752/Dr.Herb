@@ -28,8 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.txtherb = new System.Windows.Forms.TextBox();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.Label1 = new System.Windows.Forms.Label();
@@ -45,49 +46,51 @@
             this.btnPrePrint = new System.Windows.Forms.Button();
             this.PrintDocument1 = new System.Drawing.Printing.PrintDocument();
             this.label2 = new System.Windows.Forms.Label();
+            this.toolTip_txtherb = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.GVHerb)).BeginInit();
             this.SuspendLayout();
             // 
             // txtherb
             // 
-            this.txtherb.Font = new System.Drawing.Font("微軟正黑體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtherb.Font = new System.Drawing.Font("標楷體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.txtherb.Location = new System.Drawing.Point(79, 12);
             this.txtherb.Name = "txtherb";
-            this.txtherb.Size = new System.Drawing.Size(174, 33);
+            this.txtherb.Size = new System.Drawing.Size(174, 30);
             this.txtherb.TabIndex = 0;
+            this.toolTip_txtherb.SetToolTip(this.txtherb, "請由下方選單選取 或 直接輸入");
             // 
             // listBox1
             // 
-            this.listBox1.Font = new System.Drawing.Font("微軟正黑體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.listBox1.Font = new System.Drawing.Font("標楷體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 24;
+            this.listBox1.ItemHeight = 19;
             this.listBox1.Location = new System.Drawing.Point(25, 72);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(228, 388);
+            this.listBox1.Size = new System.Drawing.Size(228, 384);
             this.listBox1.TabIndex = 1;
             this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
             // Label1
             // 
             this.Label1.AutoSize = true;
-            this.Label1.Font = new System.Drawing.Font("微軟正黑體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.Label1.Location = new System.Drawing.Point(21, 15);
+            this.Label1.Font = new System.Drawing.Font("標楷體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.Label1.Location = new System.Drawing.Point(14, 15);
             this.Label1.Name = "Label1";
-            this.Label1.Size = new System.Drawing.Size(52, 24);
+            this.Label1.Size = new System.Drawing.Size(59, 19);
             this.Label1.TabIndex = 2;
             this.Label1.Text = "草藥:";
             // 
             // txtweight
             // 
-            this.txtweight.Font = new System.Drawing.Font("微軟正黑體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtweight.Font = new System.Drawing.Font("標楷體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.txtweight.Location = new System.Drawing.Point(269, 12);
             this.txtweight.Name = "txtweight";
-            this.txtweight.Size = new System.Drawing.Size(36, 33);
+            this.txtweight.Size = new System.Drawing.Size(36, 30);
             this.txtweight.TabIndex = 3;
             // 
             // ddlweight
             // 
-            this.ddlweight.Font = new System.Drawing.Font("微軟正黑體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.ddlweight.Font = new System.Drawing.Font("標楷體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.ddlweight.FormattingEnabled = true;
             this.ddlweight.Items.AddRange(new object[] {
             "錢",
@@ -95,12 +98,12 @@
             "片"});
             this.ddlweight.Location = new System.Drawing.Point(311, 12);
             this.ddlweight.Name = "ddlweight";
-            this.ddlweight.Size = new System.Drawing.Size(49, 32);
+            this.ddlweight.Size = new System.Drawing.Size(49, 27);
             this.ddlweight.TabIndex = 4;
             // 
             // btnComfirm
             // 
-            this.btnComfirm.Font = new System.Drawing.Font("微軟正黑體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btnComfirm.Font = new System.Drawing.Font("標楷體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.btnComfirm.Location = new System.Drawing.Point(383, 11);
             this.btnComfirm.Name = "btnComfirm";
             this.btnComfirm.Size = new System.Drawing.Size(70, 33);
@@ -112,7 +115,7 @@
             // lvHerb
             // 
             this.lvHerb.BackColor = System.Drawing.SystemColors.Window;
-            this.lvHerb.Font = new System.Drawing.Font("微軟正黑體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lvHerb.Font = new System.Drawing.Font("標楷體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.lvHerb.Location = new System.Drawing.Point(269, 72);
             this.lvHerb.Name = "lvHerb";
             this.lvHerb.Size = new System.Drawing.Size(256, 388);
@@ -123,30 +126,31 @@
             // 
             this.GVHerb.AllowUserToOrderColumns = true;
             this.GVHerb.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.GVHerb.Font = new System.Drawing.Font("標楷體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.GVHerb.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.GVHerb.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColHerb,
             this.ColWeight,
             this.ColUnit});
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("微軟正黑體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.GVHerb.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("標楷體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.GVHerb.DefaultCellStyle = dataGridViewCellStyle3;
             this.GVHerb.Location = new System.Drawing.Point(543, 72);
             this.GVHerb.Name = "GVHerb";
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("微軟正黑體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.GVHerb.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
-            this.GVHerb.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("微軟正黑體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("標楷體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.GVHerb.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            this.GVHerb.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("標楷體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.GVHerb.RowTemplate.Height = 24;
             this.GVHerb.Size = new System.Drawing.Size(265, 388);
             this.GVHerb.TabIndex = 7;
@@ -168,7 +172,7 @@
             // 
             // btnPrint
             // 
-            this.btnPrint.Font = new System.Drawing.Font("微軟正黑體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btnPrint.Font = new System.Drawing.Font("標楷體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.btnPrint.Location = new System.Drawing.Point(733, 13);
             this.btnPrint.Name = "btnPrint";
             this.btnPrint.Size = new System.Drawing.Size(75, 32);
@@ -179,7 +183,7 @@
             // 
             // btnPrePrint
             // 
-            this.btnPrePrint.Font = new System.Drawing.Font("微軟正黑體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btnPrePrint.Font = new System.Drawing.Font("標楷體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.btnPrePrint.Location = new System.Drawing.Point(623, 13);
             this.btnPrePrint.Name = "btnPrePrint";
             this.btnPrePrint.Size = new System.Drawing.Size(104, 30);
@@ -196,11 +200,18 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(79, 52);
+            this.label2.Font = new System.Drawing.Font("標楷體", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label2.Location = new System.Drawing.Point(76, 45);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(167, 12);
+            this.label2.Size = new System.Drawing.Size(231, 15);
             this.label2.TabIndex = 10;
             this.label2.Text = "請由下方選單選取 或 直接輸入";
+            // 
+            // toolTip_txtherb
+            // 
+            this.toolTip_txtherb.IsBalloon = true;
+            this.toolTip_txtherb.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.toolTip_txtherb.ToolTipTitle = "小提醒";
             // 
             // Form1
             // 
@@ -244,6 +255,7 @@
         private System.Windows.Forms.Button btnPrePrint;
         private System.Drawing.Printing.PrintDocument PrintDocument1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ToolTip toolTip_txtherb;
     }
 }
 
