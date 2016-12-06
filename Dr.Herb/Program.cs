@@ -6,9 +6,10 @@ using System.Windows.Forms;
 using System.IO;
 using System.Text;
 
+
 namespace Dr.Herb
 {
-    static class Program
+    public class Program
     {
         /// <summary>
         /// 應用程式的主要進入點。
@@ -18,7 +19,8 @@ namespace Dr.Herb
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());    
+            Application.Run(new Form1());
+            //Application.Run(new FormTab());
         }
 
         public static List<String> GetHerbListFromCrv() {
@@ -32,6 +34,9 @@ namespace Dr.Herb
             return ListHerb;
         }
 
-        
+
+     
+
+
     }
 }
