@@ -83,26 +83,30 @@ namespace Dr.Herb
         private DataGridView GetSelectedDataGV()
         {
             DataGridView GV = new DataGridView();
-
+            
             switch (this.tabControl1.SelectedTab.Text)
             {
                 case "藥草":
                     return this.GVHerb;
                    
-
                 case "藥粉":
                     return this.GVPowder;
-                    
+
+                case "藥粉2":
+                    return this.GVPowder2;
 
                 case "藥酒":
                     return this.GVLinquor;
-                   
-                /*
-                    //藥粉
-                default:
-                    GVaddrows(this.GVHerb, hb);
-                    break;
-                    */
+
+                case "藥酒2":
+                    return this.GVLinquor2;
+
+                    /*
+                        //藥粉
+                    default:
+                        GVaddrows(this.GVHerb, hb);
+                        break;
+                        */
             }
              return GV;
         }
@@ -126,7 +130,7 @@ namespace Dr.Herb
 
         private void btnExcel_Click(object sender, EventArgs e)
         {
-            
+            Cursor.Current = Cursors.WaitCursor;
             SaveFileDialog save = new SaveFileDialog();
             
             //save.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
@@ -168,8 +172,13 @@ namespace Dr.Herb
                 List<DataGridView> listGV = new List<DataGridView>();
                 listGV.Add(GVHerb);
                 listGV.Add(GVPowder);
+                listGV.Add(GVPowder2);
                 listGV.Add(GVLinquor);
+                listGV.Add(GVLinquor2);
 
+                //排除沒有資料
+                listGV = listGV.Where(gv => gv.Rows.Count > 0).ToList();
+             
                 DataGridView2Excel(sheet, listGV);
 
                 // 儲存檔案
@@ -205,7 +214,7 @@ namespace Dr.Herb
                     System.Runtime.InteropServices.Marshal.FinalReleaseComObject(xls);
                 }
                     GC.Collect();
-
+                Cursor.Current = Cursors.Default;
                 OpenExcel(save);
             }
         }
@@ -227,10 +236,9 @@ namespace Dr.Herb
 
         }
 
-        int startX = 3;
-        int startY = 6;
-        int wrapNum = 20;
-        int shiftNum = 4;
+        
+
+        //不能用       
         private void DataGridView2Excel(Excel.Worksheet Sheet, DataGridView GV)
         {
 
@@ -265,11 +273,11 @@ namespace Dr.Herb
             foreach (Herb herb in listhb)
             {
                 int rowindex = listhb.IndexOf(herb) + startY;
-                int colindex = startX;
+                int colindex = 3;//startX;
 
                 if (rowindex > wrapNum)
                 {
-                    rowindex -= 15;
+                    rowindex -= 18;
                     colindex += shiftNum;
                 }
               
@@ -278,7 +286,7 @@ namespace Dr.Herb
                 Sheet.Cells[rowindex, colindex++] = herb.Unit;
                 //Sheet.Cells[rowindex, colindex++] = herb.Salary;
             }
-            MessageBox.Show("共有" + listhb.Count);
+            //MessageBox.Show("共有" + listhb.Count);
 
             /*
             List<Herb> empList = (List<Herb>)dataGridView1.DataSource;
@@ -297,30 +305,55 @@ namespace Dr.Herb
 
         }
 
+        
+        //int startX = 3;
+        int firstX = 2;
+        int startY = 6;
+        int wrapNum = 23;
+        int shiftNum = 5;
+
         private void DataGridView2Excel(Excel.Worksheet Sheet, List<DataGridView> ListGV)
         {
+            int startX = firstX;
+            int GVcounter = 0;
+            
             foreach (var GV in ListGV)
-            {
-               var listhb = ConvertGVRowstoHerbList(GV);
-                foreach (Herb herb in listhb)
-                {
-                    SetStartPosByGVName(GV, out startX, out startY);
+            {   
+                //這次開的種類
+                int NumCounter = 0;
 
-                    int rowindex = listhb.IndexOf(herb) + startY;
+                var listhbRows = ConvertGVRowstoHerbList(GV);
+                var listHeaderName = ConvertGVColumnsHeader(GV);
+ 
+                for (int i = 0; i < listHeaderName.Count; i++)
+                {   //Header position
+                    int rowindex = startY - 1;
+                    int colindex = startX + 1;
+
+                    Sheet.Cells[rowindex, colindex+i] = listHeaderName[i];
+                }
+
+                foreach (Herb herb in listhbRows)
+                {
+                    //SetStartPosByGVName(GV, out startX, out startY);
+                    
+                    int rowindex = listhbRows.IndexOf(herb) + startY;
                     int colindex = startX;
 
                     if (rowindex > wrapNum)
                     {
-                        rowindex -= 15;
+                        rowindex -= 18;
                         colindex += shiftNum;
                     }
 
+                    Sheet.Cells[rowindex, colindex++] = ++NumCounter; 
                     Sheet.Cells[rowindex, colindex++] = herb.Name;
                     Sheet.Cells[rowindex, colindex++] = herb.Weight;
                     Sheet.Cells[rowindex, colindex++] = herb.Unit;
-                    //Sheet.Cells[rowindex, colindex++] = herb.Salary;
                 }
-                MessageBox.Show("共有" + listhb.Count);
+                //MessageBox.Show("共有" + listhb.Count);
+                GVcounter++;
+                startX = firstX + (shiftNum * GVcounter);
             }
             
            
@@ -330,23 +363,25 @@ namespace Dr.Herb
 
         private void SetStartPosByGVName(DataGridView GV, out int StartX, out int StartY)
         {
-            //StartX = 3;
-            //StartY = 6;
-
             switch (GV.Name)
             {
-                case "GVHerb":
+                case "GVPowder":
                     StartX = 3;
                     StartY = 6;
                     break;
 
-                case "GVPowder":
-                    StartX = 12;
+                case "GVPowder2":
+                    StartX = 8;
                     StartY = 6;
                     break;
 
                 case "GVLinquor":
-                    StartX = 16;
+                    StartX = 13;
+                    StartY = 6;
+                    break;
+
+                case "GVHerb":
+                    StartX = 18;
                     StartY = 6;
                     break;
 
@@ -372,7 +407,20 @@ namespace Dr.Herb
             };
 
             return listhb;
+         }
 
+        private List<String> ConvertGVColumnsHeader(DataGridView GV)
+        {
+            List<String> list = new List<string>();
+            var trimList = GV.Columns.Cast<DataGridViewColumn>().ToList()
+                            .Where(c => c.HeaderText != "比例").ToList();
+
+            foreach (var item in trimList)
+            {
+                list.Add(item.HeaderText);
+            }
+            
+            return list;
         }
 
 
@@ -387,6 +435,9 @@ namespace Dr.Herb
 
             var sumRate = list.Sum<DataGridViewRow>(
                  d => Convert.ToInt32(d.Cells[3].FormattedValue.ToString()));
+
+            sumRate = (sumRate == 0) ? 1 : sumRate;
+
             //var sumRate = list.GroupBy(datarow => datarow.Cells["比例"].FormattedValue).Sum();
             //Where(x => x.Cells["比例"])
             // var sumRate = list.Sum(datarow => Convert.ToInt32(datarow.Cells[3].FormattedValue));
@@ -411,6 +462,7 @@ namespace Dr.Herb
         private void btnRate_Click(object sender, EventArgs e)
         {
             calculateGVByRate();
+            lbBag.Text = "建議" + GetAdviseBagSize();
         }
 
         private Dictionary<string, int> GetcomboEatways()
@@ -469,8 +521,25 @@ namespace Dr.Herb
         private void txtDays_TextChanged(object sender, EventArgs e)
         {
             calculateGVByRate();
+            lbBag.Text = "建議" + GetAdviseBagSize();
         }
 
+        private string GetAdviseBagSize()
+        {
+
+            var list = GVPowder.Rows.Cast<DataGridViewRow>();
+            
+            var sumWeight = list.Sum<DataGridViewRow>(
+                 d => Convert.ToInt32(d.Cells[1].FormattedValue.ToString()));
+
+            if (sumWeight <= 40) return "3號袋";
+            else if (sumWeight <= 70) return "4號袋";
+            else if (sumWeight <= 120) return "5號袋";
+            else if (sumWeight <= 220) return "6號袋";
+            else if (sumWeight <= 300) return "7號袋";
+            else return "大塑膠袋";
+            
+        }
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
 
@@ -795,7 +864,9 @@ namespace Dr.Herb
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string selectedName = tabControl1.SelectedTab.Text;
+            //trim 最後一個數字
+            string selectedName = this.tabControl1.SelectedTab.Text.Substring(0, 2);
+            //string selectedName = tabControl1.SelectedTab.Text;
            
             switch (selectedName)
             {
@@ -816,5 +887,7 @@ namespace Dr.Herb
                     break;
             }
         }
+
+       
     }
 }
