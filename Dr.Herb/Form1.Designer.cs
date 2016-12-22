@@ -53,10 +53,11 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.lbBag = new System.Windows.Forms.Label();
             this.comboEatWay = new System.Windows.Forms.ComboBox();
             this.txtDays = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
+            this.btnExcel = new System.Windows.Forms.Button();
             this.btnRate = new System.Windows.Forms.Button();
             this.txtRate = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -72,30 +73,36 @@
             this.GVPowderWeight = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.GVPowderUnit = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.GVPowderRate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.txtPowder = new System.Windows.Forms.TextBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.txtPowder2 = new System.Windows.Forms.TextBox();
             this.GVPowder2 = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.txtLinquor = new System.Windows.Forms.TextBox();
             this.GVLinquor = new System.Windows.Forms.DataGridView();
             this.GVLinquorName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.GVLinquorWeight = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.GVLinquorUnit = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.GVLinquorRate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.txtLinquor2 = new System.Windows.Forms.TextBox();
             this.GVLinquor2 = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.btnExcel = new System.Windows.Forms.Button();
+            this.txtHerbMemo = new System.Windows.Forms.TextBox();
             this.btnMultiPrint = new System.Windows.Forms.Button();
             this.printDocument2 = new System.Drawing.Printing.PrintDocument();
             this.btnMultiPrePrint = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label9 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.GVHerb)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -116,6 +123,7 @@
             this.tabPage5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GVLinquor2)).BeginInit();
             this.tabPage1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtherb
@@ -167,6 +175,7 @@
             this.ddlweight.Items.AddRange(new object[] {
             "錢",
             "兩",
+            "分",
             "片",
             "匙",
             "米",
@@ -198,7 +207,6 @@
             this.ColHerb,
             this.ColWeight,
             this.ColUnit});
-            this.GVHerb.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GVHerb.Font = new System.Drawing.Font("標楷體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.GVHerb.Location = new System.Drawing.Point(3, 3);
             this.GVHerb.Name = "GVHerb";
@@ -212,7 +220,7 @@
             this.GVHerb.RowHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.GVHerb.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("標楷體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.GVHerb.RowTemplate.Height = 24;
-            this.GVHerb.Size = new System.Drawing.Size(382, 609);
+            this.GVHerb.Size = new System.Drawing.Size(385, 460);
             this.GVHerb.TabIndex = 7;
             // 
             // ColHerb
@@ -233,7 +241,7 @@
             // btnPrint
             // 
             this.btnPrint.Font = new System.Drawing.Font("標楷體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnPrint.Location = new System.Drawing.Point(989, 22);
+            this.btnPrint.Location = new System.Drawing.Point(46, 21);
             this.btnPrint.Name = "btnPrint";
             this.btnPrint.Size = new System.Drawing.Size(75, 32);
             this.btnPrint.TabIndex = 8;
@@ -244,7 +252,7 @@
             // btnPrePrint
             // 
             this.btnPrePrint.Font = new System.Drawing.Font("標楷體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnPrePrint.Location = new System.Drawing.Point(958, 60);
+            this.btnPrePrint.Location = new System.Drawing.Point(15, 59);
             this.btnPrePrint.Name = "btnPrePrint";
             this.btnPrePrint.Size = new System.Drawing.Size(104, 30);
             this.btnPrePrint.TabIndex = 9;
@@ -309,11 +317,11 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.lbBag);
             this.groupBox1.Controls.Add(this.comboEatWay);
             this.groupBox1.Controls.Add(this.txtDays);
             this.groupBox1.Controls.Add(this.btnExcel);
-            this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.btnRate);
             this.groupBox1.Controls.Add(this.txtRate);
             this.groupBox1.Controls.Add(this.label6);
@@ -335,6 +343,16 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = " ";
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("標楷體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label5.Location = new System.Drawing.Point(3, 252);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(59, 19);
+            this.label5.TabIndex = 15;
+            this.label5.Text = "天數:";
+            // 
             // lbBag
             // 
             this.lbBag.AutoSize = true;
@@ -352,6 +370,7 @@
             this.comboEatWay.Name = "comboEatWay";
             this.comboEatWay.Size = new System.Drawing.Size(124, 24);
             this.comboEatWay.TabIndex = 5;
+            this.comboEatWay.SelectedIndexChanged += new System.EventHandler(this.comboEatWay_SelectedIndexChanged);
             // 
             // txtDays
             // 
@@ -362,15 +381,16 @@
             this.txtDays.TabIndex = 7;
             this.txtDays.TextChanged += new System.EventHandler(this.txtDays_TextChanged);
             // 
-            // label5
+            // btnExcel
             // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("標楷體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label5.Location = new System.Drawing.Point(3, 251);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(59, 19);
-            this.label5.TabIndex = 8;
-            this.label5.Text = "天數:";
+            this.btnExcel.Font = new System.Drawing.Font("標楷體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btnExcel.Location = new System.Drawing.Point(325, 245);
+            this.btnExcel.Name = "btnExcel";
+            this.btnExcel.Size = new System.Drawing.Size(122, 33);
+            this.btnExcel.TabIndex = 12;
+            this.btnExcel.Text = "匯出Excel";
+            this.btnExcel.UseVisualStyleBackColor = true;
+            this.btnExcel.Click += new System.EventHandler(this.btnExcel_Click);
             // 
             // btnRate
             // 
@@ -408,6 +428,7 @@
             this.txtEatAmt.Name = "txtEatAmt";
             this.txtEatAmt.Size = new System.Drawing.Size(124, 30);
             this.txtEatAmt.TabIndex = 6;
+            this.txtEatAmt.TextChanged += new System.EventHandler(this.txtEatAmt_TextChanged);
             // 
             // label4
             // 
@@ -437,7 +458,7 @@
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(59, 19);
             this.label8.TabIndex = 13;
-            this.label8.Text = "匙數:";
+            this.label8.Text = "數量:";
             // 
             // label3
             // 
@@ -467,6 +488,7 @@
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.GVPowder);
+            this.tabPage2.Controls.Add(this.txtPowder);
             this.tabPage2.Font = new System.Drawing.Font("標楷體", 12F);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
@@ -501,7 +523,7 @@
             this.GVPowder.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.GVPowder.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("標楷體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.GVPowder.RowTemplate.Height = 24;
-            this.GVPowder.Size = new System.Drawing.Size(382, 470);
+            this.GVPowder.Size = new System.Drawing.Size(385, 460);
             this.GVPowder.TabIndex = 13;
             // 
             // GVPowderName
@@ -524,16 +546,34 @@
             this.GVPowderRate.HeaderText = "比例";
             this.GVPowderRate.Name = "GVPowderRate";
             // 
+            // txtPowder
+            // 
+            this.txtPowder.Location = new System.Drawing.Point(3, 469);
+            this.txtPowder.Multiline = true;
+            this.txtPowder.Name = "txtPowder";
+            this.txtPowder.Size = new System.Drawing.Size(378, 132);
+            this.txtPowder.TabIndex = 14;
+            // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.txtPowder2);
             this.tabPage4.Controls.Add(this.GVPowder2);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(388, 615);
+            this.tabPage4.Size = new System.Drawing.Size(391, 615);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "藥粉2";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // txtPowder2
+            // 
+            this.txtPowder2.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtPowder2.Location = new System.Drawing.Point(3, 469);
+            this.txtPowder2.Multiline = true;
+            this.txtPowder2.Name = "txtPowder2";
+            this.txtPowder2.Size = new System.Drawing.Size(378, 132);
+            this.txtPowder2.TabIndex = 18;
             // 
             // GVPowder2
             // 
@@ -547,7 +587,6 @@
             this.dataGridViewTextBoxColumn2,
             this.dataGridViewTextBoxColumn3,
             this.dataGridViewTextBoxColumn4});
-            this.GVPowder2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GVPowder2.Font = new System.Drawing.Font("標楷體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.GVPowder2.Location = new System.Drawing.Point(3, 3);
             this.GVPowder2.Name = "GVPowder2";
@@ -561,7 +600,7 @@
             this.GVPowder2.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.GVPowder2.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("標楷體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.GVPowder2.RowTemplate.Height = 24;
-            this.GVPowder2.Size = new System.Drawing.Size(382, 609);
+            this.GVPowder2.Size = new System.Drawing.Size(385, 460);
             this.GVPowder2.TabIndex = 14;
             // 
             // dataGridViewTextBoxColumn1
@@ -586,14 +625,23 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.txtLinquor);
             this.tabPage3.Controls.Add(this.GVLinquor);
             this.tabPage3.Font = new System.Drawing.Font("標楷體", 12F);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(388, 615);
+            this.tabPage3.Size = new System.Drawing.Size(391, 615);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "藥酒";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // txtLinquor
+            // 
+            this.txtLinquor.Location = new System.Drawing.Point(3, 469);
+            this.txtLinquor.Multiline = true;
+            this.txtLinquor.Name = "txtLinquor";
+            this.txtLinquor.Size = new System.Drawing.Size(378, 132);
+            this.txtLinquor.TabIndex = 15;
             // 
             // GVLinquor
             // 
@@ -607,9 +655,8 @@
             this.GVLinquorWeight,
             this.GVLinquorUnit,
             this.GVLinquorRate});
-            this.GVLinquor.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GVLinquor.Font = new System.Drawing.Font("標楷體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.GVLinquor.Location = new System.Drawing.Point(0, 0);
+            this.GVLinquor.Location = new System.Drawing.Point(3, 3);
             this.GVLinquor.Name = "GVLinquor";
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
@@ -621,7 +668,7 @@
             this.GVLinquor.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.GVLinquor.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("標楷體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.GVLinquor.RowTemplate.Height = 24;
-            this.GVLinquor.Size = new System.Drawing.Size(388, 615);
+            this.GVLinquor.Size = new System.Drawing.Size(385, 460);
             this.GVLinquor.TabIndex = 14;
             // 
             // GVLinquorName
@@ -646,14 +693,24 @@
             // 
             // tabPage5
             // 
+            this.tabPage5.Controls.Add(this.txtLinquor2);
             this.tabPage5.Controls.Add(this.GVLinquor2);
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(388, 615);
+            this.tabPage5.Size = new System.Drawing.Size(391, 615);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "藥酒2";
             this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // txtLinquor2
+            // 
+            this.txtLinquor2.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtLinquor2.Location = new System.Drawing.Point(3, 469);
+            this.txtLinquor2.Multiline = true;
+            this.txtLinquor2.Name = "txtLinquor2";
+            this.txtLinquor2.Size = new System.Drawing.Size(378, 132);
+            this.txtLinquor2.TabIndex = 16;
             // 
             // GVLinquor2
             // 
@@ -667,7 +724,6 @@
             this.dataGridViewTextBoxColumn6,
             this.dataGridViewTextBoxColumn7,
             this.dataGridViewTextBoxColumn8});
-            this.GVLinquor2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GVLinquor2.Font = new System.Drawing.Font("標楷體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.GVLinquor2.Location = new System.Drawing.Point(3, 3);
             this.GVLinquor2.Name = "GVLinquor2";
@@ -681,7 +737,7 @@
             this.GVLinquor2.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
             this.GVLinquor2.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("標楷體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.GVLinquor2.RowTemplate.Height = 24;
-            this.GVLinquor2.Size = new System.Drawing.Size(382, 609);
+            this.GVLinquor2.Size = new System.Drawing.Size(385, 460);
             this.GVLinquor2.TabIndex = 15;
             // 
             // dataGridViewTextBoxColumn5
@@ -706,30 +762,28 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.txtHerbMemo);
             this.tabPage1.Controls.Add(this.GVHerb);
             this.tabPage1.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(388, 615);
+            this.tabPage1.Size = new System.Drawing.Size(391, 615);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "藥草";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // btnExcel
+            // txtHerbMemo
             // 
-            this.btnExcel.Font = new System.Drawing.Font("標楷體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnExcel.Location = new System.Drawing.Point(325, 245);
-            this.btnExcel.Name = "btnExcel";
-            this.btnExcel.Size = new System.Drawing.Size(122, 33);
-            this.btnExcel.TabIndex = 12;
-            this.btnExcel.Text = "匯出Excel";
-            this.btnExcel.UseVisualStyleBackColor = true;
-            this.btnExcel.Click += new System.EventHandler(this.btnExcel_Click);
+            this.txtHerbMemo.Location = new System.Drawing.Point(3, 469);
+            this.txtHerbMemo.Multiline = true;
+            this.txtHerbMemo.Name = "txtHerbMemo";
+            this.txtHerbMemo.Size = new System.Drawing.Size(378, 132);
+            this.txtHerbMemo.TabIndex = 17;
             // 
             // btnMultiPrint
             // 
-            this.btnMultiPrint.Location = new System.Drawing.Point(987, 148);
+            this.btnMultiPrint.Location = new System.Drawing.Point(44, 147);
             this.btnMultiPrint.Name = "btnMultiPrint";
             this.btnMultiPrint.Size = new System.Drawing.Size(75, 23);
             this.btnMultiPrint.TabIndex = 13;
@@ -743,7 +797,7 @@
             // 
             // btnMultiPrePrint
             // 
-            this.btnMultiPrePrint.Location = new System.Drawing.Point(987, 177);
+            this.btnMultiPrePrint.Location = new System.Drawing.Point(44, 176);
             this.btnMultiPrePrint.Name = "btnMultiPrePrint";
             this.btnMultiPrePrint.Size = new System.Drawing.Size(75, 23);
             this.btnMultiPrePrint.TabIndex = 14;
@@ -753,7 +807,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(987, 206);
+            this.button1.Location = new System.Drawing.Point(44, 205);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 15;
@@ -761,18 +815,40 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.btnMultiPrePrint);
+            this.groupBox2.Controls.Add(this.button1);
+            this.groupBox2.Controls.Add(this.btnPrint);
+            this.groupBox2.Controls.Add(this.btnPrePrint);
+            this.groupBox2.Controls.Add(this.btnMultiPrint);
+            this.groupBox2.Location = new System.Drawing.Point(937, 353);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(125, 240);
+            this.groupBox2.TabIndex = 16;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "groupBox2";
+            this.groupBox2.Visible = false;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("標楷體", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label9.Location = new System.Drawing.Point(517, 9);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(159, 15);
+            this.label9.TabIndex = 17;
+            this.label9.Text = "下方藥粉重量已乘0.8";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1074, 748);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.btnMultiPrePrint);
-            this.Controls.Add(this.btnMultiPrint);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.btnPrePrint);
-            this.Controls.Add(this.btnPrint);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "Dr. Herb";
@@ -791,14 +867,20 @@
             this.groupBox1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GVPowder)).EndInit();
             this.tabPage4.ResumeLayout(false);
+            this.tabPage4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GVPowder2)).EndInit();
             this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GVLinquor)).EndInit();
             this.tabPage5.ResumeLayout(false);
+            this.tabPage5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GVLinquor2)).EndInit();
             this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -851,7 +933,6 @@
         private System.Windows.Forms.TextBox txtRate;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtDays;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox comboEatWay;
         private System.Windows.Forms.TextBox txtEatAmt;
         private System.Windows.Forms.Label label8;
@@ -873,6 +954,14 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
+        private System.Windows.Forms.TextBox txtPowder;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox txtPowder2;
+        private System.Windows.Forms.TextBox txtLinquor;
+        private System.Windows.Forms.TextBox txtLinquor2;
+        private System.Windows.Forms.TextBox txtHerbMemo;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label label9;
     }
 }
 

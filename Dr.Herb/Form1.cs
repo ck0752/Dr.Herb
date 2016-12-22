@@ -24,7 +24,8 @@ namespace Dr.Herb
         
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-           txtherb.Text = listBox1.SelectedItem.ToString();
+           var txt = listBox1.SelectedItem ?? "";
+           txtherb.Text = txt.ToString();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -33,8 +34,9 @@ namespace Dr.Herb
             //Binding List to Listbox
             var HerbList = Program.GetHerbListFromCrv().ToArray();
             listBox1.Items.AddRange(HerbList);
+            //listBox1.DisplayMember = 
          
-
+            
             //Set Autocomplete function
             AutoCompleteStringCollection allowedTypes = new AutoCompleteStringCollection();
             allowedTypes.AddRange(HerbList);
@@ -78,38 +80,19 @@ namespace Dr.Herb
             Herb hb = ComposeHerb(herbName, herbWeight, herbUnit, herbRate);
             var selectedDataGV = GetSelectedDataGV();
             GVaddrows(selectedDataGV, hb);
+            resetInputbox();
         }
 
-        private DataGridView GetSelectedDataGV()
+        private void resetInputbox()
         {
-            DataGridView GV = new DataGridView();
-            
-            switch (this.tabControl1.SelectedTab.Text)
-            {
-                case "藥草":
-                    return this.GVHerb;
-                   
-                case "藥粉":
-                    return this.GVPowder;
+            txtherb.Text = "";
+            txtweight.Text = "";
+            txtRate.Text = "";
+            txtEatAmt.Text = "";
+            txtDays.Text = "";
 
-                case "藥粉2":
-                    return this.GVPowder2;
-
-                case "藥酒":
-                    return this.GVLinquor;
-
-                case "藥酒2":
-                    return this.GVLinquor2;
-
-                    /*
-                        //藥粉
-                    default:
-                        GVaddrows(this.GVHerb, hb);
-                        break;
-                        */
-            }
-             return GV;
         }
+        
 
         private void GVaddrows(DataGridView GV, Herb Herb)
         {
@@ -170,16 +153,26 @@ namespace Dr.Herb
 
                 //多個
                 List<DataGridView> listGV = new List<DataGridView>();
-                listGV.Add(GVHerb);
                 listGV.Add(GVPowder);
                 listGV.Add(GVPowder2);
                 listGV.Add(GVLinquor);
                 listGV.Add(GVLinquor2);
+                listGV.Add(GVHerb);
 
                 //排除沒有資料
                 listGV = listGV.Where(gv => gv.Rows.Count > 0).ToList();
-             
-                DataGridView2Excel(sheet, listGV);
+
+
+                //塞入Memo
+                List<String> listTxt = new List<String>();
+                listTxt.Add(txtPowder.Text.ToString());
+                listTxt.Add(txtPowder2.Text.ToString());
+                listTxt.Add(txtLinquor.Text.ToString());
+                listTxt.Add(txtLinquor2.Text.ToString());
+                listTxt.Add(txtHerbMemo.Text.ToString());
+                listTxt = listTxt.Where(t => t.Length != 0).ToList();
+
+                DataGridView2Excel(sheet, listGV, listTxt);
 
                 // 儲存檔案
                 book.SaveAs(save.FileName);
@@ -214,11 +207,24 @@ namespace Dr.Herb
                     System.Runtime.InteropServices.Marshal.FinalReleaseComObject(xls);
                 }
                     GC.Collect();
+
+                //this.InitializeComponent();
+                 
                 Cursor.Current = Cursors.Default;
+                //resetGV();
                 OpenExcel(save);
             }
         }
+        private void resetGV()
+        {
+            
+            GVPowder.Rows.Clear();
+            GVPowder2.Rows.Clear();
+            GVLinquor.Rows.Clear();
+            GVLinquor2.Rows.Clear();
+            GVHerb.Rows.Clear();
 
+        }
         private void OpenExcel(SaveFileDialog save)
         {
             /*
@@ -238,85 +244,30 @@ namespace Dr.Herb
 
         
 
-        //不能用       
-        private void DataGridView2Excel(Excel.Worksheet Sheet, DataGridView GV)
-        {
-
-            // 下面方法二選一使用
-            // 利用 DataGridView 
-            // dataGridView1.Rows.Count-1 for null row
-            // No need -1 , cause set AllUserToAddrows to false
-            //for (int y = 0; y < dataGridView1.Rows.Count - 1; y++)
-            /*
-            for (int y = 0; y < GV.Rows.Count ; y++)
-            {
-                for (int x = 0; x < GV.Columns.Count; x++)
-                {
-                    string value = GV[x, y].Value.ToString();
-                    //Excel template 從[6,3]開始
-                    //Sheet.Cells[i + 1, j + 1] = value;
-                    if ((y + startY) > wrapNum)
-                    {
-                        Sheet.Cells[y + startY-15, x + startX + shiftNum] = value;
-                    }
-                    else
-                    {
-                        Sheet.Cells[y + startY, x + startX] = value;
-                    }; 
-                   
-                }
-            }*/
-
-            
-            // 利用 List<Employ>
-            var listhb = ConvertGVRowstoHerbList(GV);
-            foreach (Herb herb in listhb)
-            {
-                int rowindex = listhb.IndexOf(herb) + startY;
-                int colindex = 3;//startX;
-
-                if (rowindex > wrapNum)
-                {
-                    rowindex -= 18;
-                    colindex += shiftNum;
-                }
-              
-                Sheet.Cells[rowindex, colindex++] = herb.Name;
-                Sheet.Cells[rowindex, colindex++] = herb.Weight;
-                Sheet.Cells[rowindex, colindex++] = herb.Unit;
-                //Sheet.Cells[rowindex, colindex++] = herb.Salary;
-            }
-            //MessageBox.Show("共有" + listhb.Count);
-
-            /*
-            List<Herb> empList = (List<Herb>)dataGridView1.DataSource;
-            foreach (Herb herb in empList)
-            {
-                int
-                    rowindex = empList.IndexOf(herb) + 1,
-                    colindex = 1;
-
-                Sheet.Cells[rowindex, colindex++] = herb.Name;
-                Sheet.Cells[rowindex, colindex++] = herb.Weight;
-                Sheet.Cells[rowindex, colindex++] = herb.Unit;
-                //Sheet.Cells[rowindex, colindex++] = herb.Salary;
-            }
-            */
-
-        }
+      
 
         
         //int startX = 3;
         int firstX = 2;
-        int startY = 6;
+        
+        int MemostartY = 25;
         int wrapNum = 23;
         int shiftNum = 5;
+        int DayX = 18;
+        int DayY = 3;
+        int DateX = 13;
+        int DateY = 3;
+        int Maxrows = 18;
+        
 
-        private void DataGridView2Excel(Excel.Worksheet Sheet, List<DataGridView> ListGV)
+        private void DataGridView2Excel(Excel.Worksheet Sheet, List<DataGridView> ListGV, List<String> ListTxt)
         {
             int startX = firstX;
+            int startY = 6;
             int GVcounter = 0;
-            
+            int Memocounter = 0;
+            bool isWrapCol = false;
+
             foreach (var GV in ListGV)
             {   
                 //這次開的種類
@@ -324,26 +275,40 @@ namespace Dr.Herb
 
                 var listhbRows = ConvertGVRowstoHerbList(GV);
                 var listHeaderName = ConvertGVColumnsHeader(GV);
- 
+                
+                //塞入表頭
                 for (int i = 0; i < listHeaderName.Count; i++)
                 {   //Header position
                     int rowindex = startY - 1;
                     int colindex = startX + 1;
 
-                    Sheet.Cells[rowindex, colindex+i] = listHeaderName[i];
+                    Sheet.Cells[rowindex, colindex + i] = listHeaderName[i];
                 }
-
+                
+                //塞入資料
                 foreach (Herb herb in listhbRows)
                 {
                     //SetStartPosByGVName(GV, out startX, out startY);
-                    
-                    int rowindex = listhbRows.IndexOf(herb) + startY;
-                    int colindex = startX;
 
-                    if (rowindex > wrapNum)
+                    //old
+                    /*
+                     * int rowindex = listhbRows.IndexOf(herb) + startY;
+                     * int colindex = startX;
+                    */
+    
+                    int rowindex = listhbRows.IndexOf(herb) + startY;
+                    rowindex = (isWrapCol) ? rowindex - Maxrows : rowindex;
+
+                    int colindex = firstX + (shiftNum * GVcounter);
+
+                    
+                    //換行
+                    if (rowindex >= wrapNum)
                     {
-                        rowindex -= 18;
-                        colindex += shiftNum;
+                        isWrapCol = true;
+                        GVcounter++;
+                        //colindex = firstX + (shiftNum * GVcounter);
+                        
                     }
 
                     Sheet.Cells[rowindex, colindex++] = ++NumCounter; 
@@ -351,8 +316,24 @@ namespace Dr.Herb
                     Sheet.Cells[rowindex, colindex++] = herb.Weight;
                     Sheet.Cells[rowindex, colindex++] = herb.Unit;
                 }
+
+                //塞入吃法Memo
+                {
+                    int rowindex = MemostartY;
+                    int colindex = startX;
+
+                    Sheet.Cells[rowindex, colindex] = ListTxt[Memocounter].TrimEnd().TrimStart();
+                }
+
+                //塞入哩哩叩叩
+                Sheet.Cells[DayY, DayX] = txtDays.Text.Trim();
+                Sheet.Cells[DateY, DateX] = DateTime.Now.ToString("yyyy/MM/dd");
+
                 //MessageBox.Show("共有" + listhb.Count);
                 GVcounter++;
+                Memocounter++;
+                isWrapCol = false;
+               
                 startX = firstX + (shiftNum * GVcounter);
             }
             
@@ -428,7 +409,13 @@ namespace Dr.Herb
         private void calculateGVByRate()
         {
             var GV = GetSelectedDataGV();
+
+            //藥草TAB 跳出
+            if (GV.Columns.Count < 4) return;
+
             var list = GV.Rows.Cast<DataGridViewRow>();
+
+            
 
             //篩選掉 沒有比例的Row
             list = list.Where(row => row.Cells[3].FormattedValue.ToString() != "");
@@ -455,9 +442,23 @@ namespace Dr.Herb
             int perUnit = Convert.ToInt32((days * eatway * eatAmt) / sumRate);
 
             //重新計算 匙數
-            list.ToList().ForEach(d => d.Cells[1].Value = Convert.ToInt32(perUnit * Convert.ToInt32(d.Cells[3].FormattedValue)));
+            list.ToList().ForEach(
+                d => d.Cells[1].Value = Convert.ToInt32(perUnit * Convert.ToInt32(d.Cells[3].FormattedValue)));
+
+            if (GV.Name.Contains("GVPowder"))
+            {
+                calculateGVbyDiscount(list, 0.8);
+            }
+                
 
         }
+
+
+        private void calculateGVbyDiscount(IEnumerable<DataGridViewRow> list, double discount)
+        {
+            list.ToList().ForEach(
+                d => d.Cells[1].Value = Convert.ToInt32(Convert.ToInt32(d.Cells[1].Value) * discount));
+         }
 
         private void btnRate_Click(object sender, EventArgs e)
         {
@@ -530,7 +531,7 @@ namespace Dr.Herb
             var list = GVPowder.Rows.Cast<DataGridViewRow>();
             
             var sumWeight = list.Sum<DataGridViewRow>(
-                 d => Convert.ToInt32(d.Cells[1].FormattedValue.ToString()));
+                 d => Convert.ToDouble(d.Cells[1].FormattedValue.ToString()));
 
             if (sumWeight <= 40) return "3號袋";
             else if (sumWeight <= 70) return "4號袋";
@@ -872,14 +873,20 @@ namespace Dr.Herb
             {
                 case "藥粉":
                     ddlweight.SelectedIndex = ddlweight.FindStringExact("匙");
+                    listBox1.ClearSelected();
+                    listBox1.SelectedIndex = listBox1.FindStringExact("---常用---");
                     break;
 
                 case "藥酒":
                     ddlweight.SelectedIndex = ddlweight.FindStringExact("毫升");
+                    listBox1.ClearSelected();
+                    listBox1.SelectedIndex = listBox1.FindStringExact("---藥酒---");
                     break;
 
                 case "藥草":
                     ddlweight.SelectedIndex = ddlweight.FindStringExact("錢");
+                    listBox1.ClearSelected();
+                    listBox1.SelectedIndex = listBox1.FindStringExact("---常用---");
                     break;
 
                 default:
@@ -888,6 +895,87 @@ namespace Dr.Herb
             }
         }
 
-       
+        private void comboEatWay_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //var selectTabName = tabControl1.SelectedTab.Name;
+            //var selectedpage = tabControl1.Controls.Find(selectTabName, true).First();
+            //selectedpage.Controls.Find("lbPowder2Eatway", true).First().Text = comboEatWay.SelectedText;
+
+            //Label lb = (Label)tabControl1.Controls.Find("lbPowder2Eatway", true).First();
+            //lb.Text = comboEatWay.Text;
+
+            EditSelectedMemo();
+        }
+
+        private void EditSelectedMemo()
+        {
+            TextBox txt = GetSelectedMemo();
+
+            if (txt.Name != "txtHerbMemo")
+            {
+                txt.Text = "吃法: \r\n" + comboEatWay.Text + txtEatAmt.Text + ddlweight.Text;
+            }
+            else
+            {
+                txt.Text = "煮法:\t\t\t\r\n    碗水煮成\t碗藥\r\n喝法:\t\t\t\r\n一天     碗 早喝到晚\t\r\n";
+            }
+            
+        }
+
+        private DataGridView GetSelectedDataGV()
+        {
+            DataGridView GV = new DataGridView();
+
+            switch (this.tabControl1.SelectedTab.Text)
+            {
+                case "藥草":
+                    return this.GVHerb;
+
+                case "藥粉":
+                    return this.GVPowder;
+
+                case "藥粉2":
+                    return this.GVPowder2;
+
+                case "藥酒":
+                    return this.GVLinquor;
+
+                case "藥酒2":
+                    return this.GVLinquor2;
+         
+            }
+            return GV;
+        }
+
+
+        private TextBox GetSelectedMemo()
+        {
+            TextBox txt = new TextBox();
+
+            switch (this.tabControl1.SelectedTab.Text)
+            {
+                case "藥粉":
+                    return this.txtPowder;
+
+                case "藥粉2":
+                    return this.txtPowder2;
+
+                case "藥酒":
+                    return this.txtLinquor;
+
+                case "藥酒2":
+                    return this.txtLinquor2;
+
+                case "藥草":
+                    return this.txtHerbMemo;
+
+            }
+            return txt;
+        }
+
+        private void txtEatAmt_TextChanged(object sender, EventArgs e)
+        {
+            EditSelectedMemo();
+        }
     }
 }
