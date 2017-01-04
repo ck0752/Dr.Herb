@@ -45,7 +45,7 @@ namespace Dr.Herb
             txtherb.AutoCompleteSource = AutoCompleteSource.CustomSource;
 
             //Set default value
-            ddlweight.SelectedIndex = 0;
+            ddlweight.SelectedIndex = 4;
 
             //Set comboEatWats
             comboEatWay.Items.Clear();
@@ -71,6 +71,7 @@ namespace Dr.Herb
 
             //listBox1_DoubleClick( sender,  e);
 
+            /*單一選取
             var herbName = txtherb.Text.ToString();
             int herbWeight = 0;
             int.TryParse(txtweight.Text, out herbWeight);
@@ -80,6 +81,11 @@ namespace Dr.Herb
             Herb hb = ComposeHerb(herbName, herbWeight, herbUnit, herbRate);
             var selectedDataGV = GetSelectedDataGV();
             GVaddrows(selectedDataGV, hb);
+            */
+
+            //多重選取
+            AddrowsbyMultiSelect();
+
             resetInputbox();
         }
 
@@ -123,9 +129,7 @@ namespace Dr.Herb
             save.FileName = basePath + datatime+ "藥單";
             save.Filter = "*.xlsx|*.xlsx";
             save.OverwritePrompt = true;
-            //if (save.ShowDialog() != DialogResult.OK) return;
             
-
             // Excel 物件
             Excel.Application xls = null;
             Excel.Workbook book = null;
@@ -211,7 +215,7 @@ namespace Dr.Herb
                 //this.InitializeComponent();
                  
                 Cursor.Current = Cursors.Default;
-                //resetGV();
+                resetGV();
                 OpenExcel(save);
             }
         }
@@ -463,7 +467,7 @@ namespace Dr.Herb
         private void btnRate_Click(object sender, EventArgs e)
         {
             calculateGVByRate();
-            lbBag.Text = "建議" + GetAdviseBagSize();
+            //lbBag.Text = "建議" + GetAdviseBagSize();
         }
 
         private Dictionary<string, int> GetcomboEatways()
@@ -522,7 +526,7 @@ namespace Dr.Herb
         private void txtDays_TextChanged(object sender, EventArgs e)
         {
             calculateGVByRate();
-            lbBag.Text = "建議" + GetAdviseBagSize();
+            //lbBag.Text = "建議" + GetAdviseBagSize();
         }
 
         private string GetAdviseBagSize()
