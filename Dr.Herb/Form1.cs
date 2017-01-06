@@ -34,7 +34,7 @@ namespace Dr.Herb
             //Binding List to Listbox
             var HerbList = Program.GetHerbListFromCrv().ToArray();
             listBox1.Items.AddRange(HerbList);
-            //listBox1.DisplayMember = 
+            
          
             
             //Set Autocomplete function
@@ -54,6 +54,7 @@ namespace Dr.Herb
             comboEatWay.DisplayMember = "Key";
             comboEatWay.ValueMember = "Value";
 
+            
         }
         private Herb ComposeHerb(string name, int weight, string unit, string rate)
         {
@@ -86,10 +87,10 @@ namespace Dr.Herb
             //多重選取
             AddrowsbyMultiSelect();
 
-            resetInputbox();
+            resetUpInputbox();
         }
 
-        private void resetInputbox()
+        private void resetUpInputbox()
         {
             txtherb.Text = "";
             txtweight.Text = "";
@@ -115,7 +116,13 @@ namespace Dr.Herb
             
         }
 
-       
+        private void CheckandCreatePath(string path)
+        {
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+        }
 
         private void btnExcel_Click(object sender, EventArgs e)
         {
@@ -125,11 +132,14 @@ namespace Dr.Herb
             //save.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             string basePath = AppDomain.CurrentDomain.BaseDirectory.ToString();
             save.InitialDirectory = basePath;
+            string outputPath = Path.Combine(basePath, @"藥單輸出\");
             string datatime = DateTime.Now.ToString("yyyyMMddHHmmss");
-            save.FileName = basePath + datatime+ "藥單";
+            //save.FileName = basePath + datatime+ "藥單";
+            save.FileName = outputPath + datatime + "藥單";
             save.Filter = "*.xlsx|*.xlsx";
             save.OverwritePrompt = true;
-            
+            CheckandCreatePath(outputPath);
+
             // Excel 物件
             Excel.Application xls = null;
             Excel.Workbook book = null;
@@ -137,12 +147,20 @@ namespace Dr.Herb
             try
             {
                 xls = new Excel.Application();
-                //xls.DisplayAlerts = false;
-                // Excel WorkBook
-                //Excel.Workbook book = xls.Workbooks.Add();
+                
                 //Excel.Workbook book = xls.Workbooks.Open(@"D:\Tina版本.xlsx");
                 string basedirectory = AppDomain.CurrentDomain.BaseDirectory.ToString();
-                book = xls.Workbooks.Open(basedirectory + "Tina版本.xlsx");
+                string path = basedirectory + "Tina版本.xlsx";
+                if (File.Exists(path))
+                {
+                    book = xls.Workbooks.Open(basedirectory + "Tina版本.xlsx");
+                }
+                else
+                {
+                    MessageBox.Show("請確認資料夾裡面是否有 'Tina版本.xlsx' 檔案", "溫馨小提醒", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+               // book = xls.Workbooks.Open(basedirectory + "Tina版本.xlsx");
                 //App.Path & “\值班表.xls”
                 // Excel WorkBook，預設會產生一個 WorkSheet，索引從 1 開始，而非 0
                 // 寫法1
@@ -185,8 +203,9 @@ namespace Dr.Herb
               
 
             }
-            catch (Exception)
+            catch (Exception exp)
             {
+                //MessageBox.Show(String.Format("Error Message: {0}, \r\n StackTrace: {1}", exp.Message, exp.StackTrace),"錯誤訊息", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 throw;
             }
             finally
@@ -212,13 +231,46 @@ namespace Dr.Herb
                 }
                     GC.Collect();
 
-                //this.InitializeComponent();
-                 
                 Cursor.Current = Cursors.Default;
-                resetGV();
-                OpenExcel(save);
+
+                string path = save.FileName + ".xlsx";
+                //避免匯出失敗 資料被清除
+                if (File.Exists(path))
+                {
+                    OpenExcel(save);
+                    resetAll();
+                }
+
+
+               
             }
         }
+
+        private void resetAll()
+        {
+            resetGV();
+            resetEatAmtPerDayList();
+            resetUpInputbox();
+            resetDownInputBox();
+            resetlbSumDayAmt();
+            resetMemo();
+        }
+        private void resetlbSumDayAmt()
+        {
+            lbSumDayAmt.Text = "一天總共:";
+        }
+
+
+        private void resetMemo()
+        {
+            txtPowder.Text = "";
+            txtPowder2.Text = "";
+            txtLinquor.Text = "";
+            txtLinquor2.Text = "";
+            txtherb.Text = "";
+
+        }
+
         private void resetGV()
         {
             
@@ -240,9 +292,9 @@ namespace Dr.Herb
             open.OpenFile();
             */
             // this.Cursor = new Cursor(open.OpenFile()); 
+            string path = save.FileName + ".xlsx";
+            Process.Start(path);
             
-            Process.Start(save.FileName + ".xlsx");
-
 
         }
 
@@ -439,11 +491,13 @@ namespace Dr.Herb
             int days = 0;
             int.TryParse(txtDays.Text, out days);
             //吃法
-            int eatway = Convert.ToInt32(comboEatWay.SelectedValue);
-            int eatAmt = 0;
-            int.TryParse(txtEatAmt.Text, out eatAmt);
-            //int eatAmt = Convert.ToInt32(txtEatAmt.Text);
-            int perUnit = Convert.ToInt32((days * eatway * eatAmt) / sumRate);
+            //int eatway = Convert.ToInt32(comboEatWay.SelectedValue);
+            //int eatAmt = 0;
+            //int.TryParse(txtEatAmt.Text, out eatAmt);
+
+            int eatAmtPerDay = GetSumEatAmtPerDay();
+            //int perUnit = Convert.ToInt32((days * eatway * eatAmt) / sumRate);
+            int perUnit = Convert.ToInt32((days * eatAmtPerDay) / sumRate);
 
             //重新計算 匙數
             list.ToList().ForEach(
@@ -869,6 +923,10 @@ namespace Dr.Herb
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            resetDownInputBox();
+            resetEatAmtPerDayList();
+
+
             //trim 最後一個數字
             string selectedName = this.tabControl1.SelectedTab.Text.Substring(0, 2);
             //string selectedName = tabControl1.SelectedTab.Text;
@@ -901,29 +959,29 @@ namespace Dr.Herb
 
         private void comboEatWay_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //var selectTabName = tabControl1.SelectedTab.Name;
-            //var selectedpage = tabControl1.Controls.Find(selectTabName, true).First();
-            //selectedpage.Controls.Find("lbPowder2Eatway", true).First().Text = comboEatWay.SelectedText;
-
-            //Label lb = (Label)tabControl1.Controls.Find("lbPowder2Eatway", true).First();
-            //lb.Text = comboEatWay.Text;
-
-            EditSelectedMemo();
+            //EditSelectedMemo();
+            txtEatAmt.Focus();
         }
 
         private void EditSelectedMemo()
         {
+            
             TextBox txt = GetSelectedMemo();
-
+            //判斷 是否為藥草Textbox 
             if (txt.Name != "txtHerbMemo")
             {
-                txt.Text = "吃法: \r\n" + comboEatWay.Text + txtEatAmt.Text + ddlweight.Text;
+                txt.Text = "吃法: \r\n" + GetComposeEatAmtPerDayString(); 
             }
             else
             {
                 txt.Text = "煮法:\t\t\t\r\n    碗水煮成\t碗藥\r\n喝法:\t\t\t\r\n一天     碗 早喝到晚\t\r\n";
             }
             
+           
+        }
+        private String GetEatWayString()
+        {
+            return comboEatWay.Text + txtEatAmt.Text + ddlweight.Text;
         }
 
         private DataGridView GetSelectedDataGV()
@@ -977,9 +1035,71 @@ namespace Dr.Herb
             return txt;
         }
 
-        private void txtEatAmt_TextChanged(object sender, EventArgs e)
+       
+
+        private void btnAddEatway_Click(object sender, EventArgs e)
         {
+            int eatway = Convert.ToInt32(comboEatWay.SelectedValue);
+            int eatAmt = 0;
+            int.TryParse(txtEatAmt.Text, out eatAmt);
+
+            int eatAmtPerDay = eatway * eatAmt;
+
+            //一天幾匙數字加總
+            eatAmtPerDayList.Add(eatAmtPerDay);
+            lbSumDayAmt.Text = "一天總共: " + GetSumEatAmtPerDay().ToString();
+
+            //吃法文字顯示
+            var eatWayString = GetEatWayString();
+            eatAmtPerDayStringList.Add(eatWayString);
+
             EditSelectedMemo();
+            txtEatAmt.Text = "";
+
         }
+
+        List<int> eatAmtPerDayList = new List<int>();
+        List<String> eatAmtPerDayStringList = new List<String>();
+
+        private int GetSumEatAmtPerDay()
+        {
+            return eatAmtPerDayList.Sum();
+        }
+
+        private String GetComposeEatAmtPerDayString()
+        {
+            String result = "";
+
+            result = String.Join(",", eatAmtPerDayStringList);
+
+            return result;
+
+        }
+
+        private void btnDelEatway_Click(object sender, EventArgs e)
+        {
+            resetEatAmtPerDayList();
+
+            lbSumDayAmt.Text = "一天總共: " + GetSumEatAmtPerDay().ToString();
+            TextBox txt = GetSelectedMemo();
+            txt.Text = "";
+            txtEatAmt.Text = "";
+            
+        }
+
+        private void resetEatAmtPerDayList()
+        {
+            eatAmtPerDayList.Clear();
+            eatAmtPerDayStringList.Clear();
+            resetlbSumDayAmt();
+        }
+
+        private void resetDownInputBox()
+        {
+            txtEatAmt.Text = "";
+            txtDays.Text = "";
+        }
+
+        
     }
 }
