@@ -53,6 +53,8 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.listBox2 = new System.Windows.Forms.ListBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.lbSumDayAmt = new System.Windows.Forms.Label();
             this.btnDelEatway = new System.Windows.Forms.Button();
             this.btnAddEatway = new System.Windows.Forms.Button();
@@ -106,6 +108,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label9 = new System.Windows.Forms.Label();
+            this.btnIsFull = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.GVHerb)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -322,6 +325,9 @@
             // groupBox1
             // 
             this.groupBox1.AutoSize = true;
+            this.groupBox1.Controls.Add(this.btnIsFull);
+            this.groupBox1.Controls.Add(this.listBox2);
+            this.groupBox1.Controls.Add(this.textBox1);
             this.groupBox1.Controls.Add(this.lbSumDayAmt);
             this.groupBox1.Controls.Add(this.btnDelEatway);
             this.groupBox1.Controls.Add(this.btnAddEatway);
@@ -350,6 +356,25 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = " ";
+            // 
+            // listBox2
+            // 
+            this.listBox2.FormattingEnabled = true;
+            this.listBox2.ItemHeight = 12;
+            this.listBox2.Location = new System.Drawing.Point(448, 25);
+            this.listBox2.Name = "listBox2";
+            this.listBox2.Size = new System.Drawing.Size(120, 148);
+            this.listBox2.TabIndex = 20;
+            this.listBox2.Visible = false;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(342, 55);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(100, 22);
+            this.textBox1.TabIndex = 19;
+            this.textBox1.Visible = false;
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // lbSumDayAmt
             // 
@@ -535,7 +560,7 @@
             this.tabPage2.Font = new System.Drawing.Font("標楷體", 12F);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(391, 682);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "藥粉";
@@ -604,8 +629,8 @@
             this.tabPage4.Controls.Add(this.GVPowder2);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
-            this.tabPage4.Size = new System.Drawing.Size(390, 682);
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(391, 682);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "藥粉2";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -674,7 +699,7 @@
             this.tabPage3.Font = new System.Drawing.Font("標楷體", 12F);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(390, 682);
+            this.tabPage3.Size = new System.Drawing.Size(391, 682);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "藥酒";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -741,8 +766,8 @@
             this.tabPage5.Controls.Add(this.GVLinquor2);
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
-            this.tabPage5.Size = new System.Drawing.Size(390, 682);
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage5.Size = new System.Drawing.Size(391, 682);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "藥酒2";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -811,8 +836,8 @@
             this.tabPage1.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
-            this.tabPage1.Size = new System.Drawing.Size(390, 682);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(391, 682);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "藥草";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -883,6 +908,16 @@
             this.label9.Size = new System.Drawing.Size(159, 15);
             this.label9.TabIndex = 17;
             this.label9.Text = "下方藥粉重量已乘0.8";
+            // 
+            // btnIsFull
+            // 
+            this.btnIsFull.AutoSize = true;
+            this.btnIsFull.Location = new System.Drawing.Point(415, 250);
+            this.btnIsFull.Name = "btnIsFull";
+            this.btnIsFull.Size = new System.Drawing.Size(72, 16);
+            this.btnIsFull.TabIndex = 22;
+            this.btnIsFull.Text = "匯出全張";
+            this.btnIsFull.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -1011,6 +1046,9 @@
         private System.Windows.Forms.Label lbSumDayAmt;
         private System.Windows.Forms.Button btnDelEatway;
         private System.Windows.Forms.Button btnAddEatway;
+        private System.Windows.Forms.ListBox listBox2;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.CheckBox btnIsFull;
     }
 }
 

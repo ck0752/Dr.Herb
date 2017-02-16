@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
+using ImeLib;
 
 namespace Dr.Herb
 {
@@ -28,6 +29,8 @@ namespace Dr.Herb
            txtherb.Text = txt.ToString();
         }
 
+        
+
         private void Form1_Load(object sender, EventArgs e)
         {
             //Get List from file
@@ -35,7 +38,8 @@ namespace Dr.Herb
             var HerbList = Program.GetHerbListFromCrv().ToArray();
             listBox1.Items.AddRange(HerbList);
             
-         
+           
+
             
             //Set Autocomplete function
             AutoCompleteStringCollection allowedTypes = new AutoCompleteStringCollection();
@@ -96,7 +100,8 @@ namespace Dr.Herb
             txtweight.Text = "";
             txtRate.Text = "";
             txtEatAmt.Text = "";
-            txtDays.Text = "";
+            //天數歸零 會造成表格資料歸零
+            //txtDays.Text = "";
 
         }
         
@@ -147,13 +152,17 @@ namespace Dr.Herb
             try
             {
                 xls = new Excel.Application();
-                
+
                 //Excel.Workbook book = xls.Workbooks.Open(@"D:\Tina版本.xlsx");
+                string exportfilename = (btnIsFull.Checked) ? "匯出全張" : "匯出半張";
+
                 string basedirectory = AppDomain.CurrentDomain.BaseDirectory.ToString();
-                string path = basedirectory + "Tina版本.xlsx";
+                //string path = basedirectory + "Tina版本.xlsx";
+                string path = basedirectory + exportfilename + ".xlsx"; 
                 if (File.Exists(path))
                 {
-                    book = xls.Workbooks.Open(basedirectory + "Tina版本.xlsx");
+                    //book = xls.Workbooks.Open(basedirectory + "Tina版本.xlsx");
+                    book = xls.Workbooks.Open(path);
                 }
                 else
                 {
@@ -239,10 +248,11 @@ namespace Dr.Herb
                 {
                     OpenExcel(save);
                     resetAll();
+                    
                 }
 
 
-               
+
             }
         }
 
@@ -254,6 +264,7 @@ namespace Dr.Herb
             resetDownInputBox();
             resetlbSumDayAmt();
             resetMemo();
+            txtDays.Text = "";
         }
         private void resetlbSumDayAmt()
         {
@@ -298,23 +309,23 @@ namespace Dr.Herb
 
         }
 
-        
 
-      
 
-        
+
+
+       
         //int startX = 3;
         int firstX = 2;
         
-        int MemostartY = 25;
-        int wrapNum = 23;
+        //int MemostartY = 25;
+        //int wrapNum = 23;
         int shiftNum = 5;
         int DayX = 18;
         int DayY = 3;
         int DateX = 13;
         int DateY = 3;
-        int Maxrows = 18;
-        
+        //int Maxrows = 18;
+
 
         private void DataGridView2Excel(Excel.Worksheet Sheet, List<DataGridView> ListGV, List<String> ListTxt)
         {
@@ -323,6 +334,14 @@ namespace Dr.Herb
             int GVcounter = 0;
             int Memocounter = 0;
             bool isWrapCol = false;
+
+            bool isFull = btnIsFull.Checked;
+            //Maxrows 全張 25列 ,半張 8列 ,Tina 18列
+            int Maxrows = (isFull) ? 25 : 8;
+            // Full = 32, half = 15 , Tina = 25
+            int MemostartY = (isFull) ? 32 : 15;
+            // Full = 30, half = 13 , Tina = 23
+            int wrapNum = MemostartY - 2;
 
             foreach (var GV in ListGV)
             {   
@@ -353,7 +372,8 @@ namespace Dr.Herb
                     */
     
                     int rowindex = listhbRows.IndexOf(herb) + startY;
-                    rowindex = (isWrapCol) ? rowindex - Maxrows : rowindex;
+                    //rowindex = (isWrapCol) ? rowindex - Maxrows : rowindex;
+                    rowindex = (isWrapCol) ? rowindex - Maxrows * GVcounter : rowindex;
 
                     int colindex = firstX + (shiftNum * GVcounter);
 
@@ -1097,9 +1117,110 @@ namespace Dr.Herb
         private void resetDownInputBox()
         {
             txtEatAmt.Text = "";
-            txtDays.Text = "";
+            //txtDays.Text = "";
         }
 
-        
+       
+        private List<String> GetAutoCompleteListbyEng(String input)
+        {
+            var inputlen = input.Length;
+
+            var dic = Program.GetDicOfIMETaiwanAndKeyboard();
+            var herblist = Program.GetHerbListFromCrv()
+                .Where( h=> !h.Contains("-"))
+                .Where( h=> h.Length >= inputlen)
+                .ToList();
+            //herblist = herblist.Where(h => h.Except<char>("-"));
+             
+
+
+            
+            for (int i = 0; i < inputlen; i++)
+            {
+                var character = input.Substring(i, 1);
+
+                //拿到注音符號
+                string oneIMETaiwan;
+                if (dic.ContainsKey(character))
+                {
+                     oneIMETaiwan = dic[character];
+                }
+                else
+                {
+                     oneIMETaiwan = "";
+                }
+                //var oneIMETaiwan = dic[character];
+
+                //var candidateList = (i == 0) ? herblist.ToList() : tempList.ToList();
+                //FilterListbyFirstIME(oneIMETaiwan, i, candidateList);
+
+
+                //herblist.RemoveAll(h => h.Substring(i, 1));
+                
+
+                foreach (var item in herblist.ToArray())
+                {
+                    //var firstIME = GetIMETaiwanList(item).First().Substring(0,1);
+                    var itemchar = item.Substring(i, 1);
+                    var IMEstr = GetIMETaiwanList(itemchar);
+
+                    var firstIME = (IMEstr.Length > 0) ? IMEstr.Substring(0, 1) : "";
+                    //if (oneIMETaiwan == firstIME) tempList.Add(item);
+                    if (oneIMETaiwan != firstIME) herblist.Remove(item);
+                }
+                
+            }
+
+
+
+            return herblist.OrderBy(h=>h).ToList() ;
+
+        }
+
+        private List<string> FilterListbyFirstIME(string oneIME, int position, List<String> list)
+        {
+            List<string> resultList = new List<string>();
+
+            foreach (var item in list)
+            {
+                //var firstIME = GetIMETaiwanList(item).First().Substring(0,1);
+                var itemchar = item.Substring(position, 1);
+                var IMEstr = GetIMETaiwanList(itemchar);
+
+                var firstIME = (IMEstr.Length > 0) ? IMEstr.Substring(0, 1) : "";
+
+                if (oneIME == firstIME)
+                {
+                    resultList.Add(item);
+                } 
+            }
+
+            return resultList;
+        }
+
+
+        private string GetIMETaiwanList(string input)
+        {
+            using (MsImeFacade ime = new MsImeFacade(ImeClass.Taiwan))
+            {
+                input = input.Trim();
+                string result = ime.GetJMorphResultString(input, ImeLib.WinApi.MsIme.Req.Rev,ImeLib.WinApi.MsIme.Cmodes.BoPoMoFo);
+                //result = result.Split(new string[] { "\\" }, StringSplitOptions.RemoveEmptyEntries ).First();
+                return result;
+            }
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            var list = GetAutoCompleteListbyEng(textBox1.Text);
+            listBox2.Items.Clear();
+            listBox2.Items.AddRange(list.ToArray());
+        }
+
+        public class IMEHerb
+        {
+            public string Name { get; set; }
+            public string IME { get; set; }
+        }
     }
 }
